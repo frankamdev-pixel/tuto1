@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CreaDev — Landing Demo (Sombre & Futuriste)</title>
+  <meta name="description" content="CreaDev — Dév & Design. Landing page démo, responsive et animée.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000' /><text x='50' y='58' font-size='40' text-anchor='middle' fill='%23fff' font-family='Arial'>CD</text></svg>">
+  <style>
+    :root{
+      --bg:#05070a;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --muted: #9aa3b2;
+      --accent-1: #6ee7ff;
+      --accent-2: #7c5cff;
+      --accent-3: #00ffa3;
+      --glass-border: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --fw-medium: 600;
+      --max-width: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(124,92,255,0.06), transparent 8%),
+        radial-gradient(600px 300px at 90% 80%, rgba(110,231,255,0.03), transparent 10%),
+        var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      overflow-x:hidden;
+    }
+
+    /* layout */
+    .container{max-width:var(--max-width);margin:0 auto;padding:28px;}
+    header{position:fixed;top:16px;left:0;right:0;z-index:60;display:flex;justify-content:center;pointer-events:none}
+    .nav-wrap{width:calc(var(--max-width) - 56px);pointer-events:auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#04202a;box-shadow:0 8px 30px rgba(124,92,255,0.12), inset 0 -6px 12px rgba(0,0,0,0.18)
+    }
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:500;padding:10px;border-radius:10px;transition:all .18s}
+    nav a:hover{color:var(--accent-1);transform:translateY(-2px)}
+    .cta{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#031017;padding:8px 14px;border-radius:10px;font-weight:700;box-shadow:0 8px 30px rgba(124,92,255,0.12)}
+    .burger{display:none;background:transparent;border:0;color:var(--muted)}
+
+    /* hero */
+    .hero{padding:120px 0 40px 0;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:36px;border:1px solid var(--glass-border);backdrop-filter:blur(8px);box-shadow:0 20px 50px rgba(0,0,0,0.6)}
+    h1{font-size:42px;margin:0 0 14px 0;letter-spacing:-0.02em}
+    h1 .accent{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    p.lead{color:var(--muted);margin:0 0 22px}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid transparent;text-decoration:none;font-weight:700;cursor:pointer;transition:transform .16s,box-shadow .16s}
+    .btn:hover{transform:translateY(-4px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent-1)}
+    .card-right{position:relative;padding:18px;border-radius:12px;overflow:hidden}
+    .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);font-weight:700}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(124,92,255,0.14);color:var(--accent-1);font-weight:700;font-size:13px}
+
+    /* features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+    .feature{background:var(--card);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .25s,box-shadow .25s}
+    .feature:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.5)}
+    .feature h3{margin:8px 0 6px}
+    .feature p{color:var(--muted);margin:0;font-size:14px}
+
+    /* cards / split */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:36px 0}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:20px;border:1px solid var(--glass-border);backdrop-filter:blur(6px)}
+
+    /* pricing */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0}
+    .plan{padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);transition:transform .18s}
+    .plan.pop{border:1px solid rgba(124,92,255,0.12);box-shadow:0 30px 60px rgba(124,92,255,0.06);transform:scale(1.03)}
+    .price{font-size:28px;font-weight:800;margin:12px 0;color:var(--accent-1)}
+
+    /* testimonials */
+    .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .test{padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .author{display:flex;gap:12px;align-items:center}
+    .avatar{width:44px;height:44px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2),var(--accent-1));display:flex;align-items:center;justify-content:center;color:#02161a;font-weight:800}
+
+    /* contact */
+    form .row{display:flex;gap:12px}
+    input, textarea{width:100%;padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit}
+    textarea{min-height:120px;resize:vertical}
+    .muted{color:var(--muted);font-size:14px}
+
+    footer{padding:36px 0;color:var(--muted);text-align:center;margin-top:40px}
+
+    /* animations & decorations */
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+    .fadeUp{opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .reveal{opacity:1;transform:translateY(0)}
+
+    /* particle canvas full-screen behind hero panel */
+    #particles{position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.18}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr;gap:20px;padding-top:96px}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .pricing{grid-template-columns:1fr}
+      .testimonials{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      nav{display:none}
+      .burger{display:block}
+    }
+    @media (max-width:560px){
+      h1{font-size:28px}
+      .brand .logo{width:40px;height:40px}
+      .features{grid-template-columns:1fr}
+      .stat-grid{grid-template-columns:1fr}
+      .nav-wrap{width:calc(100% - 32px)}
+    }
+
+    /* focus states */
+    a:focus,button:focus,input:focus,textarea:focus{outline:2px solid rgba(124,92,255,0.14);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <header>
+    <div class="nav-wrap container" role="banner">
+      <div class="brand" aria-hidden="false">
+        <div class="logo">CD</div>
+        <div style="line-height:1">
+          <div style="font-weight:800">CreaDev</div>
+          <div style="font-size:12px;color:var(--muted)">Dev & Design Studio</div>
+        </div>
+      </div>
+
+      <nav aria-label="Navigation principale">
+        <a href="#services">Services</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Ouvrir le menu">☰</button>
+    </div>
+  </header>
+
+  <main style="position:relative;z-index:10">
+    <section class="container hero" aria-labelledby="hero-title">
+      <div class="hero-card fadeUp" data-reveal>
+        <div class="badge">Nouveau • Template Demo</div>
+        <h1 id="hero-title">Construisons des expériences numériques <span class="accent">belles & performantes</span></h1>
+        <p class="lead">Studio spécialisé en développement web, UI/UX et solutions techniques. Prototype → Design → Déploiement rapide.</p>
+
+        <div class="hero-cta">
+          <a class="btn cta" href="#contact">Demarrer un projet</a>
+          <a class="btn btn-ghost" href="#features">Voir features</a>
+        </div>
+
+        <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div class="stat-grid" style="flex:1;min-width:220px">
+            <div class="stat"><div style="font-size:12px;color:var(--muted)">Clients</div><div style="font-size:18px">+120</div></div>
+            <div class="stat"><div style="font-size:12px;color:var(--muted)">Taux de réussite</div><div style="font-size:18px">98%</div></div>
+          </div>
+          <div style="min-width:160px;text-align:right">
+            <div class="muted">Stack</div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
+              <div class="badge">React</div>
+              <div class="badge">Node</div>
+              <div class="badge">Design</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card-right">
+        <div class="card-right-inner glass float" style="border-radius:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div style="font-weight:800">Dashboard preview</div>
+            <div style="font-size:12px;color:var(--muted)">Realtime demo</div>
+          </div>
+
+          <svg width="100%" height="160" viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#7c5cff" stop-opacity="0.9" />
+                <stop offset="1" stop-color="#6ee7ff" stop-opacity="0.9" />
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="rgba(2,6,10,0.45)" rx="12"></rect>
+            <g transform="translate(12,12)">
+              <rect x="0" y="6" width="120" height="18" rx="6" fill="#071018"></rect>
+              <rect x="140" y="6" width="400" height="18" rx="6" fill="#071018"></rect>
+              <rect x="0" y="36" width="540" height="88" rx="8" fill="url(#g)"></rect>
+              <text x="20" y="64" fill="rgba(255,255,255,0.9)" font-size="12">Active users</text>
+              <text x="20" y="82" fill="rgba(255,255,255,0.85)" font-size="22" font-weight="700">3,482</text>
+            </g>
+          </svg>
+
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:120px">
+              <div style="font-size:12px;color:var(--muted)">Uptime</div>
+              <div style="font-weight:800">99.99%</div>
+            </div>
+            <div style="flex:1;min-width:120px">
+              <div style="font-size:12px;color:var(--muted)">Build</div>
+              <div style="font-weight:800">v2.4.1</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="container" id="services" aria-labelledby="services-title">
+      <h2 id="services-title" style="margin-top:22px">Nos services</h2>
+      <div class="features" style="margin-top:12px">
+        <article class="feature fadeUp" data-reveal>
+          <div style="font-size:22px">Design d'interface</div>
+          <p>UI/UX design moderne, prototypes Figma et UX research pour des interfaces claires et engageantes.</p>
+        </article>
+        <article class="feature fadeUp" data-reveal>
+          <div style="font-size:22px">Développement web</div>
+          <p>Applications React, Next.js, APIs Node/Laravel, performance et tests.</p>
+        </article>
+        <article class="feature fadeUp" data-reveal>
+          <div style="font-size:22px">Brand & Stratégie</div>
+          <p>Identité visuelle, naming, stratégie produit et landing qui convertissent.</p>
+        </article>
+      </div>
+
+      <div class="split" style="margin-top:28px">
+        <div class="glass fadeUp" data-reveal>
+          <h3>Pourquoi nous choisir</h3>
+          <ul style="color:var(--muted);margin-top:12px">
+            <li>Process clair : discovery → design → dev → deploy</li>
+            <li>Deployment automatique (Vercel, Netlify, DigitalOcean)</li>
+            <li>Focus performance & accessibilité</li>
+          </ul>
+        </div>
+        <div class="glass fadeUp" data-reveal>
+          <h3>Notre workflow</h3>
+          <p class="muted">Design system, composants réutilisables, CI/CD, monitoring: tout est pensé pour une livraison fiable et rapide.</p>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <div class="badge">Design System</div>
+            <div class="badge">Atomic Dev</div>
+            <div class="badge">CI/CD</div>
+            <div class="badge">Tests</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="features">
+      <h2 style="margin-top:10px">Features avancées</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px">
+        <div class="glass fadeUp" data-reveal>
+          <h3>Optimisation</h3>
+          <p class="muted">Lazy load, code-splitting, images optimisées, audits Lighthouse > 90.</p>
+        </div>
+        <div class="glass fadeUp" data-reveal>
+          <h3>Sécurité & Scalabilité</h3>
+          <p class="muted">Authentification, rôle/permission, backups et déploiements multi-régions.</p>
+        </div>
+      </div>
+
+      <div class="pricing" id="pricing" style="margin-top:20px">
+        <div class="plan fadeUp" data-reveal>
+          <div style="font-weight:800">Starter</div>
+          <div class="price">Free</div>
+          <p class="muted">Landing simple • Déploiement rapide • 1 projet</p>
+          <ul style="color:var(--muted);margin-top:12px">
+            <li>Template HTML/CSS</li>
+            <li>Déploiement Vercel</li>
+          </ul>
+        </div>
+
+        <div class="plan pop fadeUp" data-reveal>
+          <div style="font-weight:800">Pro</div>
+          <div class="price">€49 / mois</div>
+          <p class="muted">Site complet • CMS • Support</p>
+          <ul style="color:var(--muted);margin-top:12px">
+            <li>Design personnalisé</li>
+            <li>Optimisation SEO</li>
+            <li>Monitoring</li>
+          </ul>
+        </div>
+
+        <div class="plan fadeUp" data-reveal>
+          <div style="font-weight:800">Enterprise</div>
+          <div class="price">Sur devis</div>
+          <p class="muted">Solutions sur-mesure, intégrations & SLA</p>
+          <ul style="color:var(--muted);margin-top:12px">
+            <li>Architecture dédiée</li>
+            <li>Scaling automatique</li>
+            <li>Support 24/7</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="margin-top:18px">
+      <h2>Témoignages</h2>
+      <div class="testimonials" style="margin-top:12px">
+        <article class="test fadeUp" data-reveal>
+          <p class="muted">“Travail rapide, design moderne. Recommandé pour toute startup.”</p>
+          <div class="author" style="margin-top:12px">
+            <div class="avatar">AB</div>
+            <div>
+              <div style="font-weight:800">A. Bako</div>
+              <div class="muted" style="font-size:13px">CEO — StartUpX</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="test fadeUp" data-reveal>
+          <p class="muted">“Le site s'est lancé en 1 jour sur Vercel. Perf top.”</p>
+          <div class="author" style="margin-top:12px">
+            <div class="avatar">LS</div>
+            <div>
+              <div style="font-weight:800">L. Sah</div>
+              <div class="muted" style="font-size:13px">Product Lead</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="contact" style="margin-top:30px">
+      <h2>Contact</h2>
+      <div class="split" style="margin-top:12px">
+        <form class="glass fadeUp" data-reveal id="contactForm" onsubmit="handleContact(event)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">Parlons de ton projet</div>
+            <div class="muted">Réponse sous 24h</div>
+          </div>
+          <div style="margin-top:12px" class="row">
+            <input id="name" type="text" placeholder="Ton nom" required />
+            <input id="email" type="email" placeholder="Ton e-mail" required />
+          </div>
+          <div style="margin-top:12px">
+            <input id="subject" type="text" placeholder="Sujet" required />
+          </div>
+          <div style="margin-top:12px">
+            <textarea id="message" placeholder="Décris ton projet..." required></textarea>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
+            <button type="submit" class="btn cta">Envoyer</button>
+            <div id="formStatus" class="muted">Pas d'envoi réel — demo locale</div>
+          </div>
+        </form>
+
+        <aside class="glass fadeUp" data-reveal>
+          <h3>Infos</h3>
+          <p class="muted">Email: hello@creadev.example</p>
+          <p class="muted">Localisation: Remote</p>
+          <p style="margin-top:12px" class="muted">Tu peux remplacer ces infos, connecter un backend ou Netlify Functions pour envoyer les messages.</p>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="yr"></span> CreaDev — Démo • Template
+    </footer>
+  </main>
+
+  <script>
+    // small helpers & state
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // burger menu simple
+    const burger = document.getElementById('burger');
+    burger?.addEventListener('click', ()=> {
+      const nav = document.querySelector('nav');
+      if(!nav) return;
+      if(nav.style.display === 'flex'){nav.style.display='none'; burger.textContent='☰';}
+      else {nav.style.display='flex'; burger.textContent='✕'; nav.style.flexDirection='column'; nav.style.background='linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))'; nav.style.padding='12px'; nav.style.borderRadius='12px';}
+    });
+
+    // intersection observer reveal
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('reveal');
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+    // contact demo handler
+    function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const status = document.getElementById('formStatus');
+      if(!name||!email||!subject||!message){ status.textContent='Veuillez remplir tout le formulaire.'; return; }
+      status.textContent = 'Merci — message simulé envoyé ✔️';
+      e.target.reset();
+      setTimeout(()=> status.textContent='Pas d\'envoi réel — demo locale', 4000);
+    }
+
+    // simple particle system (canvas)
+    (function(){
+      const canvas = document.getElementById('particles');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w=canvas.width=innerWidth, h=canvas.height=innerHeight;
+      window.addEventListener('resize', ()=>{ w=canvas.width=innerWidth; h=canvas.height=innerHeight; init(); });
+
+      const config = {count: Math.min(120, Math.floor((w*h)/8000)), speed: 0.3, size: {min:1, max:2.6}};
+      let particles=[];
+
+      function rand(min,max){return Math.random()*(max-min)+min;}
+      function init(){
+        particles = [];
+        for(let i=0;i<config.count;i++){
+          particles.push({
+            x: Math.random()*w,
+            y: Math.random()*h,
+            vx: rand(-config.speed, config.speed),
+            vy: rand(-config.speed, config.speed),
+            r: rand(config.size.min, config.size.max),
+            hue: rand(180,260),
+            alpha: rand(0.06,0.18)
+          });
+        }
+      }
+
+      function step(){
+        ctx.clearRect(0,0,w,h);
+        for(let p of particles){
+          p.x += p.vx;
+          p.y += p.vy;
+          if(p.x < -10) p.x = w + 10;
+          if(p.x > w + 10) p.x = -10;
+          if(p.y < -10) p.y = h + 10;
+          if(p.y > h + 10) p.y = -10;
+          ctx.beginPath();
+          const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
+          g.addColorStop(0, `hsla(${p.hue},90%,60%,${p.alpha})`);
+          g.addColorStop(1, `rgba(7,10,15,0)`);
+          ctx.fillStyle=g;
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(step);
+      }
+
+      init(); step();
+    })();
+
+    // subtle parallax on mouse for card-right
+    (function(){
+      const card = document.querySelector('.card-right-inner');
+      if(!card) return;
+      document.addEventListener('mousemove', (e)=>{
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        card.style.transform = `translate3d(${dx*6}px,${dy*6}px,0)`;
+      });
+      document.addEventListener('mouseleave', ()=> card.style.transform = '');
+    })();
+  </script>
+</body>
+</html>
